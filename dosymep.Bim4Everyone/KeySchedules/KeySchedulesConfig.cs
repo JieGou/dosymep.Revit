@@ -258,14 +258,14 @@ namespace dosymep.Bim4Everyone.KeySchedules {
         /// <param name="configPath">Путь до конфигурации.</param>
         /// <remarks>Возвращает конфигурацию по умолчанию если был найден переданный файл.</remarks>
         public static KeySchedulesConfig Load(string configPath) {
-            return File.Exists(configPath) ? JsonConvert.DeserializeObject<KeySchedulesConfig>(File.ReadAllText(configPath)) : GetDefaultConfg();
+            return File.Exists(configPath) ? JsonConvert.DeserializeObject<KeySchedulesConfig>(File.ReadAllText(configPath)) : GetDefaultConfig();
         }
 
         /// <summary>
         /// Возвращает конфигурацию по умолчанию.
         /// </summary>
         /// <returns>Возвращает конфигурацию по умолчанию.</returns>
-        public static KeySchedulesConfig GetDefaultConfg() {
+        public static KeySchedulesConfig GetDefaultConfig() {
             return new KeySchedulesConfig();
         }
     }

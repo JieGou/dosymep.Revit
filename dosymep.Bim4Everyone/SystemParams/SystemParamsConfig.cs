@@ -48,7 +48,7 @@ namespace dosymep.Bim4Everyone.SystemParams {
         }
 
         /// <inheritdoc/>
-        public override IEnumerable<RevitParam> GetSharedParams() {
+        public override IEnumerable<RevitParam> GetRevitParams() {
             return Enum.GetValues(typeof(BuiltInParameter)).Cast<BuiltInParameter>().Select(item => GetSystemParam(item));
         }
 #else
@@ -77,7 +77,7 @@ namespace dosymep.Bim4Everyone.SystemParams {
         /// </summary>
         /// <param name="languageType">Язык системы.</param>
         public static void LoadInstance(LanguageType? languageType) {
-            Instance = languageType.HasValue ? Load(languageType) : GetDefaultConfg();
+            Instance = languageType.HasValue ? Load(languageType) : GetDefaultConfig();
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace dosymep.Bim4Everyone.SystemParams {
         /// Возвращает конфигурацию по умолчанию.
         /// </summary>
         /// <returns>Возвращает конфигурацию по умолчанию.</returns>
-        public static SystemParamsConfig GetDefaultConfg() {
+        public static SystemParamsConfig GetDefaultConfig() {
             return new SystemParamsConfig();
         }
     }

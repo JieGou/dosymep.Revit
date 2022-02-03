@@ -82,14 +82,14 @@ namespace dosymep.Bim4Everyone.Schedules {
         /// <param name="configPath">Путь до конфигурации.</param>
         /// <remarks>Возвращает конфигурацию по умолчанию если был найден переданный файл.</remarks>
         public static SchedulesConfig Load(string configPath) {
-            return File.Exists(configPath) ? JsonConvert.DeserializeObject<SchedulesConfig>(File.ReadAllText(configPath)) : GetDefaultConfg();
+            return File.Exists(configPath) ? JsonConvert.DeserializeObject<SchedulesConfig>(File.ReadAllText(configPath)) : GetDefaultConfig();
         }
 
         /// <summary>
         /// Возвращает конфигурацию по умолчанию.
         /// </summary>
         /// <returns>Возвращает конфигурацию по умолчанию.</returns>
-        public static SchedulesConfig GetDefaultConfg() {
+        public static SchedulesConfig GetDefaultConfig() {
             return new SchedulesConfig();
         }
     }

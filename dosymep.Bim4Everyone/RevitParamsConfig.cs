@@ -29,7 +29,7 @@ namespace dosymep.Bim4Everyone {
         /// Возвращает весь список настроек параметров.
         /// </summary>
         /// <returns>Возвращает весь список настроек параметров.</returns>
-        public virtual IEnumerable<RevitParam> GetSharedParams() {
+        public virtual IEnumerable<RevitParam> GetRevitParams() {
             return GetType().GetProperties().Select(item => item.GetValue(this)).OfType<RevitParam>().OrderBy(item => item.PropertyName);
         }
     }
