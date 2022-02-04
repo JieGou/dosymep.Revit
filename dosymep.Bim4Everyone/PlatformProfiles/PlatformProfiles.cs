@@ -14,12 +14,12 @@ namespace dosymep.Bim4Everyone.PlatformProfiles {
         /// <summary>
         /// Путь до корпоративного хранилища профилей.
         /// </summary>
-        private static string ProfilePath => GetProfilePath();
+        public static string ProfilePath => GetProfilePath();
 
         /// <summary>
         /// Путь до папок профилей у пользователя.
         /// </summary>
-        private static string UserProfilesPath => GetUserProfilePath();
+        public static string UserProfilesPath => GetUserProfilePath();
 
         /// <summary>
         /// Текущий выбранный экземпляр профиля.
@@ -29,12 +29,24 @@ namespace dosymep.Bim4Everyone.PlatformProfiles {
         /// <summary>
         /// Наименование профиля по умолчанию.
         /// </summary>
-        public string DefaultProfileName { get; set; } = "Default";
+        public string DefaultProfileName { get; set; }
 
         /// <summary>
         /// Список профилей.
         /// </summary>
         public List<PlatformProfile> Profiles { get; set; } = new List<PlatformProfile>();
+
+        /// <summary>
+        /// Сохранить настройки профилей.
+        /// </summary>
+        public void SavePlatformProfiles(string platformProfilePath) {
+            if(string.IsNullOrEmpty(platformProfilePath)) {
+                throw new ArgumentException("Value cannot be null or empty.", nameof(platformProfilePath));
+            }
+
+            Directory.CreateDirectory(Path.GetDirectoryName(platformProfilePath));
+            File.WriteAllText(platformProfilePath, JsonConvert.SerializeObject(this, Formatting.Indented));
+        }
 
         /// <summary>
         /// Возвращает профили платформы из удаленного местоположения.
@@ -62,7 +74,7 @@ namespace dosymep.Bim4Everyone.PlatformProfiles {
                 return new PlatformProfiles();
             }
 
-            string profilesFile = Path.Combine(ProfilePath, "Profiles.json");
+            string profilesFile = Path.Combine(UserProfilesPath, "Profiles.json");
             return !File.Exists(profilesFile)
                 ? new PlatformProfiles()
                 : JsonConvert.DeserializeObject<PlatformProfiles>(File.ReadAllText(profilesFile));
@@ -83,6 +95,31 @@ namespace dosymep.Bim4Everyone.PlatformProfiles {
                 CopyFilesRecursively(new DirectoryInfo(profilePath),
                     new DirectoryInfo(Path.Combine(UserProfilesPath, Path.GetFileName(profilePath))));
             }
+
+            PlatformProfiles userPlatformProfiles = GetUserPlatformProfiles();
+            
+            userPlatformProfiles.Profiles = userPlatformProfiles.Profiles
+                .Union(platformProfiles.Profiles)
+                .ToList();
+            
+            userPlatformProfiles.SavePlatformProfiles(Path.Combine(UserProfilesPath, "Profiles.json"));
+        }
+
+        /// <summary>
+        /// Загружает текущий профиль.
+        /// </summary>
+        public static void LoadCurrentProfile() {
+            PlatformProfiles userPlatformProfiles = GetUserPlatformProfiles();
+            if(string.IsNullOrEmpty(userPlatformProfiles.DefaultProfileName)) {
+                PlatformProfiles platformProfiles = GetPlatformProfiles();
+                userPlatformProfiles.DefaultProfileName = platformProfiles.DefaultProfileName;
+            }
+
+            Instance = userPlatformProfiles.Profiles
+                           .FirstOrDefault(item => item.Name.Equals(userPlatformProfiles.DefaultProfileName))
+                       ?? GetDefaultPlatformProfile();
+            Instance.ProfilesPath = Path.Combine(UserProfilesPath, Instance.Name);
+            Instance.LoadSettings();
         }
 
         private static void CopyFilesRecursively(DirectoryInfo source, DirectoryInfo target) {
