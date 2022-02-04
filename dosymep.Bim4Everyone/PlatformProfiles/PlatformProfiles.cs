@@ -14,12 +14,12 @@ namespace dosymep.Bim4Everyone.PlatformProfiles {
         /// <summary>
         /// Путь до корпоративного хранилища профилей.
         /// </summary>
-        public static string ProfilePath => GetProfilePath();
+        private static string ProfilePath => GetProfilePath();
 
         /// <summary>
         /// Путь до папок профилей у пользователя.
         /// </summary>
-        public static string UserProfilesPath => GetUserProfilePath();
+        private static string UserProfilesPath => GetUserProfilePath();
 
         /// <summary>
         /// Текущий выбранный экземпляр профиля.
@@ -29,50 +29,60 @@ namespace dosymep.Bim4Everyone.PlatformProfiles {
         /// <summary>
         /// Наименование профиля по умолчанию.
         /// </summary>
-        public string DefaultProfileName { get; set; }
+        public string DefaultProfileName { get; set; } = "Default";
 
         /// <summary>
         /// Список профилей.
         /// </summary>
-        public List<PlatformProfile> Profiles { get; set; }
+        public List<PlatformProfile> Profiles { get; set; } = new List<PlatformProfile>();
+
+        /// <summary>
+        /// Возвращает профили платформы из удаленного местоположения.
+        /// </summary>
+        /// <returns>Возвращает профили платформы из удаленного местоположения.</returns>
+        public static PlatformProfiles GetPlatformProfiles() {
+            if(string.IsNullOrEmpty(ProfilePath)
+               || !Directory.Exists(ProfilePath)) {
+                return new PlatformProfiles();
+            }
+
+            string profilesFile = Path.Combine(ProfilePath, "Bim4Everyone.json");
+            return !File.Exists(profilesFile)
+                ? new PlatformProfiles()
+                : JsonConvert.DeserializeObject<PlatformProfiles>(File.ReadAllText(profilesFile));
+        }
+
+        /// <summary>
+        /// Возвращает профили платформы из пользовательского местоположения.
+        /// </summary>
+        /// <returns>Возвращает профили платформы из пользовательского местоположения.</returns>
+        public static PlatformProfiles GetUserPlatformProfiles() {
+            if(string.IsNullOrEmpty(UserProfilesPath)
+               || !Directory.Exists(UserProfilesPath)) {
+                return new PlatformProfiles();
+            }
+
+            string profilesFile = Path.Combine(ProfilePath, "Profiles.json");
+            return !File.Exists(profilesFile)
+                ? new PlatformProfiles()
+                : JsonConvert.DeserializeObject<PlatformProfiles>(File.ReadAllText(profilesFile));
+        }
 
         /// <summary>
         /// Загружает профили из удаленного местоположения.
         /// </summary>
         public static void DownloadProfiles() {
-            if(string.IsNullOrEmpty(ProfilePath)
-               || !Directory.Exists(ProfilePath)) {
-                Instance = GetDefaultPlatformProfile();
-                Instance.LoadSettings();
-                return;
-            }
-
-            string profilesFile = Path.Combine(ProfilePath, "Bim4Everyone.json");
-
-            PlatformProfiles platformProfiles =
-                JsonConvert.DeserializeObject<PlatformProfiles>(File.ReadAllText(profilesFile));
-
+            PlatformProfiles platformProfiles = GetPlatformProfiles();
             foreach(string profilePath in platformProfiles.Profiles
                         .Where(profile => profile.ProfilePlace == ProfilePlace.Directory)
                         .Select(profile =>
                             Path.IsPathRooted(profile.ProfilesPath)
                                 ? profile.ProfilesPath
-                                : Path.Combine(ProfilePath, profile.ProfilesPath.ToString()))) {
+                                : Path.Combine(ProfilePath, profile.ProfilesPath))) {
 
                 CopyFilesRecursively(new DirectoryInfo(profilePath),
                     new DirectoryInfo(Path.Combine(UserProfilesPath, Path.GetFileName(profilePath))));
             }
-
-            Instance = platformProfiles.Profiles.FirstOrDefault(item =>
-                item.Name.Equals(platformProfiles.DefaultProfileName));
-
-            if(Instance == null) {
-                Instance = GetDefaultPlatformProfile();
-            } else {
-                Instance.ProfilesPath = UserProfilesPath;
-            }
-            
-            Instance.LoadSettings();
         }
 
         private static void CopyFilesRecursively(DirectoryInfo source, DirectoryInfo target) {
@@ -81,7 +91,7 @@ namespace dosymep.Bim4Everyone.PlatformProfiles {
             }
 
             foreach(FileInfo file in source.GetFiles()) {
-                file.CopyTo(Path.Combine(target.FullName, file.Name));
+                file.CopyTo(Path.Combine(target.FullName, file.Name), true);
             }
         }
 
