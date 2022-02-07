@@ -72,12 +72,33 @@ namespace dosymep.Bim4Everyone.PlatformProfiles {
         public string KeySchedulesPath => Path.Combine(ProfilesPath, "KeySchedules.json");
 
         /// <summary>
-        /// Абсолютный путь до файла настроек параметров проекта.
+        /// Абсолютный путь до файла настроек платформы.
         /// </summary>
         [JsonIgnore]
         public string PlatformSettingsPath =>
             Path.Combine(ProfilesPath, @"PlatformSettings\PlatformSettings.json");
 
+        /// <summary>
+        /// Абсолютный путь до файла настроек обозревателя семейств.
+        /// </summary>
+        [JsonIgnore]
+        public string FamilyExplorerSettingsPath =>
+            Path.Combine(ProfilesPath, @"FamilyExplorer\FamilyExplorer.json");
+        
+        /// <summary>
+        /// Абсолютный путь до файла настроек менеджера видов.
+        /// </summary>
+        [JsonIgnore]
+        public string ManageViewSettingsPath =>
+            Path.Combine(ProfilesPath, @"ManageView\ManageView.json");
+        
+        /// <summary>
+        /// Абсолютный путь до файла настроек копирования стандартов.
+        /// </summary>
+        [JsonIgnore]
+        public string CopyStandartsSettingsPath =>
+            Path.Combine(ProfilesPath, @"CopyStandarts\CopyStandarts.json");
+        
         #endregion
 
         #region Settings
@@ -111,6 +132,24 @@ namespace dosymep.Bim4Everyone.PlatformProfiles {
         /// </summary>
         [JsonIgnore]
         public PlatformSettings PlatformSettings => PlatformSettings.Load(PlatformSettingsPath);
+        
+        /// <summary>
+        /// Настройки обозревателя семейств.
+        /// </summary>
+        [JsonIgnore]
+        public FamilyExplorerSettings FamilyExplorerSettings => FamilyExplorerSettings.Load(FamilyExplorerSettingsPath);
+        
+        /// <summary>
+        /// Настройки менеджера видов.
+        /// </summary>
+        [JsonIgnore]
+        public ManageViewSettings ManageViewSettings => ManageViewSettings.Load(ManageViewSettingsPath);
+        
+        /// <summary>
+        /// Настройки копирования стандартов.
+        /// </summary>
+        [JsonIgnore]
+        public CopyStandartsSettings CopyStandartsSettings => CopyStandartsSettings.Load(CopyStandartsSettingsPath);
 
         #endregion
 
@@ -133,6 +172,9 @@ namespace dosymep.Bim4Everyone.PlatformProfiles {
 
             // Загрузка настроек плагинов
             PlatformSettings.LoadInstance(PlatformSettingsPath);
+            FamilyExplorerSettings.LoadInstance(FamilyExplorerSettingsPath);
+            ManageViewSettings.LoadInstance(ManageViewSettingsPath);
+            CopyStandartsSettings.LoadInstance(CopyStandartsSettingsPath);
         }
 
         #region IEquatable
