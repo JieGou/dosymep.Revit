@@ -79,6 +79,14 @@ namespace dosymep.Bim4Everyone.PlatformProfiles {
             Path.Combine(ProfilesPath, @"PlatformSettings\PlatformSettings.json");
 
         /// <summary>
+        /// Абсолютный путь до файла пользовательских настроек платформы.
+        /// </summary>
+        [JsonIgnore]
+        public string UserPlatformSettingsPath =>
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "dosymep",
+                ModuleEnvironment.RevitVersion, @"PlatformSettings\PlatformSettings.json");
+
+        /// <summary>
         /// Абсолютный путь до файла настроек обозревателя семейств.
         /// </summary>
         [JsonIgnore]
@@ -134,6 +142,13 @@ namespace dosymep.Bim4Everyone.PlatformProfiles {
         public PlatformSettings PlatformSettings => PlatformSettings.Load(PlatformSettingsPath);
         
         /// <summary>
+        /// Пользовательские настройки платформы.
+        /// </summary>
+        [JsonIgnore]
+        public UserPlatformSettings UserPlatformSettings => UserPlatformSettings.Load(UserPlatformSettingsPath);
+
+        
+        /// <summary>
         /// Настройки обозревателя семейств.
         /// </summary>
         [JsonIgnore]
@@ -172,6 +187,8 @@ namespace dosymep.Bim4Everyone.PlatformProfiles {
 
             // Загрузка настроек плагинов
             PlatformSettings.LoadInstance(PlatformSettingsPath);
+            UserPlatformSettings.LoadInstance(UserPlatformSettingsPath);
+            
             FamilyExplorerSettings.LoadInstance(FamilyExplorerSettingsPath);
             ManageViewSettings.LoadInstance(ManageViewSettingsPath);
             CopyStandartsSettings.LoadInstance(CopyStandartsSettingsPath);
