@@ -85,25 +85,25 @@ namespace dosymep.Bim4Everyone.PlatformProfiles {
         /// Настройки общих параметров.
         /// </summary>
         [JsonIgnore]
-        public SharedParamsConfig SharedParams => SharedParamsConfig.Instance;
+        public SharedParamsConfig SharedParams => SharedParamsConfig.Load(SharedParamsPath);
 
         /// <summary>
         /// Настройки общих параметров проекта.
         /// </summary>
         [JsonIgnore]
-        public ProjectParamsConfig ProjectParams => ProjectParamsConfig.Instance;
+        public ProjectParamsConfig ProjectParams => ProjectParamsConfig.Load(ProjectParamsPath);
 
         /// <summary>
         /// Настройки спецификаций.
         /// </summary>
         [JsonIgnore]
-        public SchedulesConfig Schedules => SchedulesConfig.Instance;
-
+        public SchedulesConfig Schedules => SchedulesConfig.Load(SchedulesPath);
+        
         /// <summary>
         /// Настройки платформы.
         /// </summary>
         [JsonIgnore]
-        public PlatformSettings PlatformSettings => PlatformSettings.Instance;
+        public PlatformSettings PlatformSettings => PlatformSettings.Load(PlatformSettingsPath);
 
         #endregion
 
