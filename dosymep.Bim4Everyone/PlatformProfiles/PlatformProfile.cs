@@ -2,6 +2,7 @@
 using System.IO;
 
 using dosymep.Bim4Everyone.KeySchedules;
+using dosymep.Bim4Everyone.PlatformProfiles.PluginSettings;
 using dosymep.Bim4Everyone.ProjectParams;
 using dosymep.Bim4Everyone.Schedules;
 using dosymep.Bim4Everyone.SharedParams;

@@ -2,7 +2,7 @@
 
 using pyRevitLabs.Json;
 
-namespace dosymep.Bim4Everyone.PlatformProfiles {
+namespace dosymep.Bim4Everyone.PlatformProfiles.PluginSettings {
     /// <summary>
     /// Класс конфигурации платформы.
     /// </summary>
