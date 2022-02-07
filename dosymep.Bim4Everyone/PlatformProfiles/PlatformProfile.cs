@@ -100,6 +100,12 @@ namespace dosymep.Bim4Everyone.PlatformProfiles {
         public SchedulesConfig Schedules => SchedulesConfig.Load(SchedulesPath);
         
         /// <summary>
+        /// Настройки ключевых спецификаций.
+        /// </summary>
+        [JsonIgnore]
+        public KeySchedulesConfig KeySchedules => KeySchedulesConfig.Load(SchedulesPath);
+        
+        /// <summary>
         /// Настройки платформы.
         /// </summary>
         [JsonIgnore]
