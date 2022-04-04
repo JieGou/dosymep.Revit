@@ -42,6 +42,8 @@ namespace dosymep.Bim4Everyone.SimpleServices {
             Instance.Bind<ILogger>().ToMethod(context => InitLogger(context, uiApplication)).InSingletonScope();
             
             Instance.Bind<INotificationService>().ToMethod(context => new XtraNotificationService("Bim4Everyone")).InSingletonScope();
+
+            Instance.Bind<ILanguageService>().ToMethod(context => new RevitLanguageService(uiApplication)).InSingletonScope();
         }
 
         private static ILogger InitLogger(IContext context, UIApplication uiApplication) {
