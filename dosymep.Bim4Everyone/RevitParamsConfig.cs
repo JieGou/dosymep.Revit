@@ -11,6 +11,7 @@ using dosymep.Bim4Everyone.SimpleServices;
 using pyRevitLabs.Json;
 
 namespace dosymep.Bim4Everyone {
+
     /// <summary>
     /// Класс по работе с параметрами Revit.
     /// </summary>
@@ -21,9 +22,9 @@ namespace dosymep.Bim4Everyone {
         protected Dictionary<string, RevitParam> _revitParams;
 
         /// <summary>
-        /// Сохранение текущей конфигурации.
+        /// Saving the current configuration.
         /// </summary>
-        /// <param name="configPath">Путь до конфигурации.</param>
+        /// <param name="configPath">Path to configuration.</param>
         public virtual void Save(string configPath) {
             if(string.IsNullOrEmpty(configPath)) {
                 throw new ArgumentException($"'{nameof(configPath)}' cannot be null or empty.", nameof(configPath));

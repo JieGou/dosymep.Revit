@@ -9,21 +9,22 @@ using dosymep.Bim4Everyone.SimpleServices;
 using dosymep.Revit;
 
 namespace dosymep.Bim4Everyone.SystemParams {
+
     /// <summary>
-    /// Конфигурация системных параметров.
+    /// Configuration of system parameters.
     /// </summary>
     public class SystemParamsConfig : RevitParamsConfig, ISystemParamsService {
         private readonly LanguageType? _languageType;
 
         /// <summary>
-        /// Инициализирует конфигурацию системных параметров.
+        /// Initializes the configuration of system parameters.
         /// </summary>
         internal SystemParamsConfig() {
             _revitParams = new Dictionary<string, RevitParam>();
         }
 
         /// <summary>
-        /// Инициализирует конфигурацию системных параметров.
+        /// Initializes the configuration of system parameters.
         /// </summary>
         /// <param name="languageType">Язык системы.</param>
         internal SystemParamsConfig(LanguageType? languageType)
@@ -79,7 +80,8 @@ namespace dosymep.Bim4Everyone.SystemParams {
             return string.IsNullOrEmpty(paramId)
                 ? null
                 : new SystemParam(paramId) {
-                    LanguageType = languageType, StorageType = SystemParam.GetSystemParamId(paramId).GetStorageType()
+                    LanguageType = languageType,
+                    StorageType = SystemParam.GetSystemParamId(paramId).GetStorageType()
                 };
         }
 
