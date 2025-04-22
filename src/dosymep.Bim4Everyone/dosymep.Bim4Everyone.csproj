@@ -1,0 +1,86 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <UseWPF>true</UseWPF>
+        <TargetFramework>net48</TargetFramework> <!-- set default target framework -->
+        <RevitVersion Condition="'$(RevitVersion)' == ''">2024</RevitVersion> <!-- set default revit version -->
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <Resource Include="..\..\assets\Bim4Everyone.png" Link="assets\Bim4Everyone.png" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <Reference Include="dosymep.SimpleServices, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>$(AppData)\pyRevit\Extensions\BIM4Everyone.lib\dosymep_libs\libs\dosymep.SimpleServices.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="dosymep.Xpf.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>$(AppData)\pyRevit\Extensions\BIM4Everyone.lib\dosymep_libs\libs\dosymep.Xpf.Core.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="dosymep.Xpf.Core.Ninject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>$(AppData)\pyRevit\Extensions\BIM4Everyone.lib\dosymep_libs\libs\dosymep.Xpf.Core.Ninject.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        
+        <Reference Include="Serilog.Sinks.Autodesk.Revit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>$(AppData)\pyRevit\Extensions\BIM4Everyone.lib\dosymep_libs\libs\Serilog.Sinks.Autodesk.Revit.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="Serilog.Enrichers.Autodesk.Revit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>$(AppData)\pyRevit\Extensions\BIM4Everyone.lib\dosymep_libs\libs\Serilog.Enrichers.Autodesk.Revit.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="pyRevitLabs.Json">
+            <HintPath>$(AppData)\pyRevit-Master\bin\pyRevitLabs.Json.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="System.Web" />
+        <Reference Include="WindowsBase" />
+        <Reference Include="System.Net.Http" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="PresentationFramework" />
+        <Reference Include="PresentationCore" />
+
+        <PackageReference Include="Ninject" Version="3.3.4">
+            <PrivateAssets>all</PrivateAssets>
+            <ExcludeAssets>runtime</ExcludeAssets>
+        </PackageReference>
+
+        <PackageReference Include="Ninject.Extensions.ChildKernel" Version="3.3.0">
+            <PrivateAssets>all</PrivateAssets>
+            <ExcludeAssets>runtime</ExcludeAssets>
+        </PackageReference>
+
+        <PackageReference Include="Serilog" Version="2.10.0">
+            <PrivateAssets>all</PrivateAssets>
+            <ExcludeAssets>runtime</ExcludeAssets>
+        </PackageReference>
+
+        <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0">
+            <PrivateAssets>all</PrivateAssets>
+            <ExcludeAssets>runtime</ExcludeAssets>
+        </PackageReference>
+
+        <PackageReference Include="Serilog.Sinks.File" Version="5.0.0">
+            <PrivateAssets>all</PrivateAssets>
+            <ExcludeAssets>runtime</ExcludeAssets>
+        </PackageReference>
+
+        <PackageReference Include="DevExpress.Wpf" Version="21.2.3">
+            <PrivateAssets>all</PrivateAssets>
+            <ExcludeAssets>runtime</ExcludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\dosymep.Revit\dosymep.Revit.csproj" />
+    </ItemGroup>
+</Project>

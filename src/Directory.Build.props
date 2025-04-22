@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <Platforms>x64</Platforms>
+        <OutputType>Library</OutputType>
+        <NoWarn>1701;1702;MSB3246</NoWarn>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <Configurations>D2020;D2021;D2022;D2023;D2024;Debug;Release</Configurations>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration.StartsWith(`D`))'">
+        <Optimization>false</Optimization>
+        <DebugSymbols>true</DebugSymbols>
+        <OutputPath>bin\x64\Debug\$(RevitVersion)</OutputPath>
+        <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration.StartsWith(`R`))'">
+        <Optimize>true</Optimize>
+        <DebugSymbols>false</DebugSymbols>
+        <OutputPath>bin\x64\Release\$(RevitVersion)</OutputPath>
+        <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$(RevitVersion) != ''">
+        <Version>$(RevitVersion).2.4</Version>
+        <FileVersion>$(RevitVersion).2.4</FileVersion>
+        <Company>dosymep</Company>
+        <Authors>dosymep</Authors>
+        <PackageTags>dosymep, revit</PackageTags>
+        <Copyright>Copyright © 2022</Copyright>
+        <PackageProjectUrl>https://github.com/dosymep/dosymep.Revit.git</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/dosymep/dosymep.Revit.git</RepositoryUrl>
+        <RepositoryType>Git</RepositoryType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CSharp" Version="4.7.0"/>
+        <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0"/>
+
+        <PackageReference Include="OpenMcdf" Version="2.2.1.9">
+            <PrivateAssets>all</PrivateAssets>
+            <ExcludeAssets>runtime</ExcludeAssets>
+        </PackageReference>
+
+        <PackageReference Include="Autodesk.Revit.Sdk.Refs" Version="*"/>
+        <PackageReference Include="Autodesk.Revit.Sdk.Refs.$(RevitVersion)" Version="*"/>
+    </ItemGroup>
+</Project>
